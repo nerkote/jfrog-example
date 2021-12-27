@@ -1,9 +1,9 @@
 resources:
-  - name: jfrog_nexploit_repeater
+  - name: jfrognexploit
     type: GitRepo
     configuration:
-      gitProvider: GitHub
-      path: NeuraLegion/jfrog-example
+      gitProvider: nexploitIntegration
+      path: nerkote/jfrog-example
 
 pipelines:
   - name: nexploit_repeater
@@ -12,7 +12,7 @@ pipelines:
         type: Bash
         configuration:
           integrations:
-            - name: Nexploit
+            - name: NEXPLOIT
           inputResources:
             - name: jfrog_nexploit_repeater
         execution:

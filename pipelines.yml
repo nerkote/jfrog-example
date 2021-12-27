@@ -26,7 +26,8 @@ pipelines:
             - npm -v
             - sudo npm install -g @neuralegion/nexploit-cli --unsafe-perm=true
             - |
-              nexploit-cli repeater --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m --id 4rTdvf9AUoqY9SnXSiXQTU
+              PID_REPEATER=$(nexploit-cli repeater --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m --id 4rTdvf9AUoqY9SnXSiXQTU)
+            - printf "$PID_REPEATER id of repeater"
             - |  
               SCAN_ID=$(nexploit-cli scan:run \
                 --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m      \

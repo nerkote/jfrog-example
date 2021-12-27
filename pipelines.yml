@@ -16,6 +16,7 @@ pipelines:
           inputResources:
             - name: jfrognexploit
         execution:
+          onexecution:
             - sudo apt update
             - sudo chmod 1777 /tmp
             - sudo apt update
@@ -24,7 +25,8 @@ pipelines:
             - node -v
             - npm -v
             - sudo npm install -g @neuralegion/nexploit-cli --unsafe-perm=true
-            - nexploit-cli repeater --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m --id 4rTdvf9AUoqY9SnXSiXQTU
+            - |
+              nexploit-cli repeater --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m --id 4rTdvf9AUoqY9SnXSiXQTU
             - |  
               SCAN_ID=$(nexploit-cli scan:run \
                 --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m      \
@@ -41,5 +43,5 @@ pipelines:
                 --timeout 20m                         \
                 --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m  \
                 --breakpoint high_issue $SCAN_ID
-            onComplete:
-              - nexploit-cli scan:stop --token $int_Nexploit_NEXPLOIT_TOKEN $SCAN_ID
+          onComplete:
+            - nexploit-cli scan:stop --token $int_Nexploit_NEXPLOIT_TOKEN $SCAN_ID

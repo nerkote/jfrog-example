@@ -28,12 +28,12 @@ pipelines:
             - docker-compose --env-file=.env up -d
             - docker-compose config
             - |
-              SCAN_ID=$(nexploit-cli scan:run                                                \
-                --name "💎 Broken Crystals for a #${res_jfrognexploit_commitSha} #${run_id}" \
+              SCAN_ID=$(nexploit-cli scan:run                
+                --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m                         \
+                  --name "💎 Broken Crystals for Jfrog repeater" \
                 --repeater 4rTdvf9AUoqY9SnXSiXQTU                                            \
                 --crawler https://brokencrystals.com                                        \
-                --smart                                                                      \
-                --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m)
+                --smart)
             - printf "Scan was started with ID https://nexploit.app/scans/$SCAN_ID"
             - |
               nexploit-cli scan:polling               \

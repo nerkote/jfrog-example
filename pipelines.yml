@@ -31,8 +31,6 @@ pipelines:
               printf "NEXPLOIT_TOKEN=$int_Nexploit_NEXPLOIT_TOKEN\nREPEATER=$int_Nexploit_REPEATER\n" > .env
               cat .env
             - |
-              echo $NEXPLOIT_TOKEN
-              echo $REPEATER
               docker-compose --env-file=.env up -d
               docker-compose config
             - |

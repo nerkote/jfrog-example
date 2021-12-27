@@ -14,7 +14,7 @@ pipelines:
           integrations:
             - name: NEXPLOIT
           inputResources:
-            - name: frognexploit
+            - name: jfrognexploit
         execution:
           onExecute:
             - sudo apt update

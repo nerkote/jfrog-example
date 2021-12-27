@@ -22,7 +22,7 @@ pipelines:
             - sudo apt update            
             - curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
             - sudo apt-get install -y nodejs
-            - sudo npm install -g @neuralegion/nexploit-cli --unsafe-prem=true
+            - sudo npm install -g @neuralegion/nexploit-cli --unsafe-perm=true
             - |
               nexploit-cli repeater --id 4rTdvf9AUoqY9SnXSiXQTU --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m
               sleep 20

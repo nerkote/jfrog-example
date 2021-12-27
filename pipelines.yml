@@ -16,7 +16,6 @@ pipelines:
           inputResources:
             - name: jfrognexploit
         execution:
-          onExecute:
             - sudo apt update
             - sudo chmod 1777 /tmp
             - sudo apt update

@@ -11,7 +11,7 @@ services:
     - ./pg.sql:/docker-entrypoint-initdb.d/pg.sql
   nodejs:
     image: neuralegion/brokencrystals
-    container_name: nodejs
+    container_name: nodejs 12
     restart: always
     logging:
       options:
@@ -25,7 +25,7 @@ services:
     ports:
       - "8000:80"
     depends_on:
-      - nodejs
+      - nodejs 12
   repeater:
     image: neuralegion/repeater:latest
     restart: always

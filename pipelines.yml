@@ -22,10 +22,10 @@ pipelines:
             - sudo apt update            
             - curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
             - sudo apt-get install -y nodejs
-            - sudo npm install -g @neuralegion/nexploit-cli --unsafe-perm=true
+            - sudo npm install @neuralegion/nexploit-cli -g || true
             - |
               nexploit-cli repeater --id 4rTdvf9AUoqY9SnXSiXQTU --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m
-              sleep 10
+              sleep 20
             - |
               SCAN_ID=$(nexploit-cli scan:run \
                 --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m      \

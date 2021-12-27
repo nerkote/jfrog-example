@@ -27,7 +27,7 @@ pipelines:
             - sudo chmod +x /usr/local/bin/docker-compose
             - printf "NEXPLOIT_TOKEN=vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m\nREPEATER=4rTdvf9AUoqY9SnXSiXQTU\n" > .env
             - cat .env
-            - docker-compose --env-file=.env up -d
+            - docker-compose.yml --env-file=.env up -d
             - docker-compose config 
             - |
               SCAN_ID=$(nexploit-cli scan:run \

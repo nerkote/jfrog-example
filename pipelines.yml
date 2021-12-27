@@ -16,8 +16,6 @@ pipelines:
           inputResources:
             - name: jfrognexploit
         execution:
-         - sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-         - sudo chmod +x /usr/local/bin/docker-compose
           onExecute:
             - sudo apt update
             - sudo chmod 1777 /tmp
@@ -25,9 +23,10 @@ pipelines:
             - curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
             - sudo apt-get install -y nodejs
             - sudo npm install -g @neuralegion/nexploit-cli --unsafe-perm=true
-            - docker-compose --env-file=.env up -d
-            - docker-compose config
-            - |  
+            - sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            - sudo chmod +x /usr/local/bin/docker-compose
+            - | 
+              PID_REPEATER=$(nexploit-cli repeater --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m --id 4rTdvf9AUoqY9SnXSiXQTU > /dev/null & echo $! )
               SCAN_ID=$(nexploit-cli scan:run \
                 --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m      \
                 --id 4rTdvf9AUoqY9SnXSiXQTU                 \
@@ -44,4 +43,4 @@ pipelines:
                 --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m  \
                 --breakpoint high_issue $SCAN_ID
           onComplete:
-            - nexploit-cli scan:stop --token $int_Nexploit_NEXPLOIT_TOKEN $SCAN_ID
+            - nexploit-cli scan:stop --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m $SCAN_ID

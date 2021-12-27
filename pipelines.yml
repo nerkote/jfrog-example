@@ -22,32 +22,24 @@ pipelines:
             - sudo apt update
             - sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             - sudo chmod +x /usr/local/bin/docker-compose
-            - sudo apt install nodejs npm
-            - sudo apt install --fix-broken
+            - curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+            - sudo apt-get install -y nodejs
             - sudo npm install -g @neuralegion/nexploit-cli --unsafe-perm=true
-            - cd $res_jfrog_nexploit_repeater_resourcePath
-            - ls
-            - |
-              printf "NEXPLOIT_TOKEN=$int_Nexploit_NEXPLOIT_TOKEN\nREPEATER=$int_Nexploit_REPEATER\n" > .env
-              cat .env
-            - |
-              echo $NEXPLOIT_TOKEN
-              echo $REPEATER
-              docker-compose --env-file=.env up -d
-              docker-compose config
+            - docker-compose --env-file=.env up -d
+            - docker-compose config
             - |
               SCAN_ID=$(nexploit-cli scan:run                                                \
                 --name "💎 Broken Crystals for a #${res_jfrognexploit_commitSha} #${run_id}" \
-                --repeater $int_Nexploit_REPEATER                                            \
-                --crawler http://brokencrystals.local                                        \
+                --repeater 4rTdvf9AUoqY9SnXSiXQTU                                            \
+                --crawler https://brokencrystals.com                                        \
                 --smart                                                                      \
-                --token $int_Nexploit_NEXPLOIT_TOKEN)
+                --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m)
             - printf "Scan was started with ID https://nexploit.app/scans/$SCAN_ID"
             - |
               nexploit-cli scan:polling               \
                 --interval 30s                        \
                 --timeout 20m                         \
-                --token $int_Nexploit_NEXPLOIT_TOKEN  \
+                --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m  \
                 --breakpoint medium_issue $SCAN_ID
           onComplete:
-            - nexploit-cli scan:stop --token $int_Nexploit_NEXPLOIT_TOKEN $SCAN_ID
+            - nexploit-cli scan:stop --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m $SCAN_ID

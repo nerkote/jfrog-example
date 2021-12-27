@@ -28,7 +28,6 @@ pipelines:
             - |
               nexploit-cli repeater --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m --id 4rTdvf9AUoqY9SnXSiXQTU
             - |
-            - |
               SCAN_ID=$(nexploit-cli scan:run \
                 --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m      \
                 --id 4rTdvf9AUoqY9SnXSiXQTU                 \

@@ -11,7 +11,6 @@ services:
     - ./pg.sql:/docker-entrypoint-initdb.d/pg.sql
   nodejs:
     image: neuralegion/brokencrystals
-    container_name: nodejs
     restart: always
     logging:
       options:
@@ -19,11 +18,10 @@ services:
         max-size: "10m"
     depends_on:
       - db
+      - keycloak
   brokencrystals.local:
     image: neuralegion/brokencrystals-proxy-http
     restart: always
-    ports:
-      - "8000:80"
     depends_on:
       - nodejs
   repeater:
@@ -33,3 +31,30 @@ services:
       REPEATER_TOKEN: vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m
       REPEATER_AGENT: 4rTdvf9AUoqY9SnXSiXQTU
       DEBUG: nexploit-cli
+  keycloak-db:
+    image: "postgres:12.2-alpine"
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+    restart: on-failure
+    stdin_open: true
+    tty: true
+    volumes:
+      - "./keycloak/db:/var/lib/postgresql/data/"
+  keycloak:
+    image: jboss/keycloak:latest
+    volumes:
+      - "./keycloak/imports/realm-export.json:/opt/jboss/keycloak/imports/realm-export.json"
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: keycloak-db
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_SCHEMA: public
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: Pa55w0rd
+      KEYCLOAK_IMPORT: /opt/jboss/keycloak/imports/realm-export.json -Dkeycloak.profile.feature.upload_scripts=enabled
+    depends_on:
+      - keycloak-db

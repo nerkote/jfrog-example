@@ -4,8 +4,8 @@ resources:
     configuration:
       gitProvider: nexploitIntegration
       path: nerkote/jfrog-example
-      branches:
-      include: repeater
+        branches:
+        include: repeater
       
 pipelines:
   - name: nexploit

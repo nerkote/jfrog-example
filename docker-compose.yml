@@ -30,6 +30,6 @@ services:
     image: neuralegion/repeater:latest
     restart: always
     environment:
-      REPEATER_TOKEN: $NEXPLOIT_TOKEN
-      REPEATER_AGENT: $REPEATER
+      REPEATER_TOKEN: vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m
+      REPEATER_AGENT: 4rTdvf9AUoqY9SnXSiXQTU
       DEBUG: nexploit-cli

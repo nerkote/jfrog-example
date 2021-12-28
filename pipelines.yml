@@ -30,7 +30,7 @@ pipelines:
             - docker-compose --version
             - mkdir demo
             - cd demo
-            - docker-compose up -d -f
+            - docker-compose up -d --force-recreate
             - |
               SCAN_ID=$(nexploit-cli scan:run \
                 --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m      \

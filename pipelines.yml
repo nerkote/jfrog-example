@@ -25,13 +25,13 @@ pipelines:
             - curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
             - sudo apt-get install -y nodejs
             - sudo npm install -g @neuralegion/nexploit-cli --unsafe-perm=true
-            - sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            - sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             - sudo chmod +rwx /usr/local/bin/docker-compose
-            - |
-              printf "NEXPLOIT_TOKEN=vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m\nREPEATER=4rTdvf9AUoqY9SnXSiXQTU\n" > .env
-              cat .env
-            - |
-               docker-compose --env-file=.env up -d
+            - docker-compose --version
+            - mkdir demo
+            - cd demo
+            - nano docker-compose.yml
+            - docker-compose up -d
             - |
               SCAN_ID=$(nexploit-cli scan:run \
                 --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m      \

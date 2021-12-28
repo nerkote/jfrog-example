@@ -26,7 +26,7 @@ pipelines:
             - sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             - sudo chmod +x /usr/local/bin/docker-compose
             - |
-              printf "NEXPLOIT_TOKEN=$NEXPLOIT_TOKEN\nREPEATER=$REPEATER\n" > .env
+              printf "NEXPLOIT_TOKEN=vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m\nREPEATER=4rTdvf9AUoqY9SnXSiXQTU\n" > .env
               cat .env
             - |
               sudo docker-compose --env-file=.env up -d

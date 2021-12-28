@@ -29,9 +29,6 @@ pipelines:
               printf "NEXPLOIT_TOKEN=vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m\nREPEATER=4rTdvf9AUoqY9SnXSiXQTU\n" > .env
               cat .env
             - |
-              docker-compose up -d
-              docker-compose config
-            - |
               SCAN_ID=$(nexploit-cli scan:run \
                 --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m      \
                 --id 4rTdvf9AUoqY9SnXSiXQTU                 \

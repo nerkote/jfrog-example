@@ -25,14 +25,13 @@ pipelines:
             - curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
             - sudo apt-get install -y nodejs
             - sudo npm install -g @neuralegion/nexploit-cli --unsafe-perm=true
-            - cd $res_jfrog_nexploit_repeater_resourcePath
             - ls 
             - |
               printf "NEXPLOIT_TOKEN=$int_Nexploit_NEXPLOIT_TOKEN\nREPEATER=$int_Nexploit_REPEATER\n" > .env
               cat .env
             - |
-              echo $NEXPLOIT_TOKEN
-              echo $REPEATER
+              echo $int_Nexploit_NEXPLOIT_TOKEN
+              echo $int_Nexploit_REPEATER
               docker-compose --env-file=.env up -d
               docker-compose config
             - |

@@ -25,9 +25,6 @@ pipelines:
             - curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
             - sudo apt-get install -y nodejs
             - sudo npm install -g @neuralegion/nexploit-cli --unsafe-perm=true
-            - ls
-            - cd workspace
-            - ls 
             - |
               printf "NEXPLOIT_TOKEN=$int_Nexploit_NEXPLOIT_TOKEN\nREPEATER=$int_Nexploit_REPEATER\n" > .env
               cat .env
@@ -35,7 +32,8 @@ pipelines:
               echo $NEXPLOIT_TOKEN
               echo $REPEATER
               docker-compose --env-file=.env up -d
-              docker-compose config
+              docker-compose config 
+              sleep 10
             - |
               SCAN_ID=$(nexploit-cli scan:run       \
                 --name "💎 Broken Crystals for a #${res_jfrognexploit_commitSha} #${run_id}" \

@@ -34,7 +34,7 @@ pipelines:
             - |
               echo $NEXPLOIT_TOKEN
               echo $REPEATER
-              docker-compose --env-file=.env up -d
+              docker-compose.yml --env-file=.env up -d
               docker-compose config
             - |
               SCAN_ID=$(nexploit-cli scan:run       \

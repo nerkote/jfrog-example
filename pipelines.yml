@@ -28,8 +28,9 @@ pipelines:
             - |
                 printf "NEXPLOIT_TOKEN=$int_Nexploit_NEXPLOIT_TOKEN\nREPEATER=$int_Nexploit_REPEATER\n" > .env
                 cat .env
+            - |
                 docker-compose -f docker-compose.yml --env-file=.env up -d
-                docker-compose config       
+                docker-compose -f docker-compose.yml config     
             - |
               SCAN_ID=$(nexploit-cli scan:run       \
                 --name "💎 Broken Crystals for a #${res_jfrognexploit_commitSha} #${run_id}" \

@@ -21,12 +21,15 @@ pipelines:
             - sudo chmod 1777 /tmp
             - sudo apt update            
             - sudo curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-            - sudo chmod +x /usr/local/bin/docker-compose
+            - sudo chmod +rwx /usr/local/bin/docker-compose
             - curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
             - sudo apt-get install -y nodejs
             - sudo npm install -g @neuralegion/nexploit-cli --unsafe-perm=true
-            - sudo docker-compose ps
-            - sudo docker-compose up
+            - |
+                printf "NEXPLOIT_TOKEN=$int_Nexploit_NEXPLOIT_TOKEN\nREPEATER=$_int_Nexploit_REPEATER\n" > .env
+                cat .env
+                docker-compose --env-file=.env up -d
+                docker-compose config       
             - |
               SCAN_ID=$(nexploit-cli scan:run       \
                 --name "💎 Broken Crystals for a #${res_jfrognexploit_commitSha} #${run_id}" \

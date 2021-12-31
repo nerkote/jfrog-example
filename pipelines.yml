@@ -26,7 +26,7 @@ pipelines:
             - sudo apt-get install -y nodejs
             - sudo npm install -g @neuralegion/nexploit-cli --unsafe-perm=true
             - |
-                printf "NEXPLOIT_TOKEN=$int_Nexploit_NEXPLOIT_TOKEN\nREPEATER=$_int_Nexploit_REPEATER\n" > .env
+                printf "NEXPLOIT_TOKEN=$int_Nexploit_NEXPLOIT_TOKEN\nREPEATER=$int_Nexploit_REPEATER\n" > .env
                 cat .env
                 docker-compose -f docker-compose.yml --env-file=.env up -d
                 docker-compose config       

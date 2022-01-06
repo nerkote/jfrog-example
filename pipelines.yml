@@ -18,7 +18,6 @@ pipelines:
         execution:
           onStart:
             - echo "Preparing for work..."
-            - echo "Cleaning up some stuff"
             - sudo apt update
             - sudo chmod 1777 /tmp
             - sudo apt update            
@@ -27,19 +26,20 @@ pipelines:
             - sudo npm install -g @neuralegion/nexploit-cli --unsafe-perm=true
           onExecute:
             - |
-              echo "Start Repeater 🏁"
+              printf "Start Repeater 🏁"
               PID_REPEATER=$(nexploit-cli repeater --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --id pQVpFx4swaytVDV9m5p3fS &> /dev/null & echo $!)
-              echo "Repeater started PID: $PID_REPEATER"
+              printf "Repeater started PID: $PID_REPEATER"
               sleep 10
-              echo "Start NeuraLegion Scan 🏁"
+              printf "Start NeuraLegion Scan 🏁"
               SCAN_ID=$(nexploit-cli scan:run --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --repeater pQVpFx4swaytVDV9m5p3fS --name "JFrog scan with repeater" --crawler https://brokencrystals.com/ --smart)
-              echo "Scan was started with ID https://app.neuralegion.com/scans/$SCAN_ID"
+              printf "Scan was started with ID https://app.neuralegion.com/scans/$SCAN_ID"
               sleep 10
+              printf "Wait for issues ⏳"
             - | 
-              echo "Wait for issues ⏳"
-              RESULT=$(nexploit-cli scan:polling --interval 30s --timeout 20m --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --breakpoint medium_issue $SCAN_ID)
-              if [ -z "$RESULT" ] then echo "Failed to stop scan" else echo "Stop Scan 🛑" nexploit-cli scan:stop --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r $SCAN_ID fi
-          onSuccess:
-            - echo "Job well done!"
-          onFailure:
-            - echo "uh oh, something went wrong"
+              nexploit-cli scan:polling               \
+                --interval 30s                        \
+                --timeout 20m                         \
+                --token $int_Nexploit_NEXPLOIT_TOKEN  \
+                --breakpoint high_issue $SCAN_ID
+          onComplete:
+            - nexploit-cli scan:stop --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r $SCAN_ID

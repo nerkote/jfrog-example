@@ -29,7 +29,7 @@ pipelines:
              echo ${NEURALEGION_TOKEN}
              echo ${REPEATER_ID}
              PID_REPEATER=$(nexploit-cli repeater --token=${NEURALEGION_TOKEN} --id=${REPEATER_ID} --bus amqps://amq.nexploit.app:5672 &> /dev/null & echo $!)
-             echo "Repeater started PID: $PID_REPEATER\n"
+             echo $PID_REPEATER"
             sleep 5
             echo "Start NeuraLegion Scan 🏁"
             SCAN_ID=$(nexploit-cli scan:run --token ${NEURALEGION_TOKEN} --repeater ${REPEATER_ID} --name "Jenkins Scan with Repeater" --crawler https://brokencrystals.com/ --smart)

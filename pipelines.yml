@@ -27,20 +27,19 @@ pipelines:
           onExecute:
             - |
               echo "Start Repeater 🏁"
-              PID_REPEATER=$(nexploit-cli repeater --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --id pQVpFx4swaytVDV9m5p3fS &> /dev/null & echo $!)
+              PID_REPEATER=$(nexploit-cli repeater --token $int_Nexploit_NEXPLOIT_TOKEN --id $int_Nexploit_REPEATER &> /dev/null & echo $!)
               echo "Repeater started PID: $PID_REPEATER"
               sleep 10
               echo "Start NeuraLegion Scan 🏁"
-              SCAN_ID=$(nexploit-cli scan:run --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --repeater pQVpFx4swaytVDV9m5p3fS --name "JFrog scan with repeater" --crawler https://brokencrystals.com/ --smart)
+              SCAN_ID=$(nexploit-cli scan:run --token $int_Nexploit_NEXPLOIT_TOKEN --repeater $int_Nexploit_REPEATER --name "JFrog scan with repeater" --crawler https://brokencrystals.com/ --smart)
               echo "Scan was started with ID https://app.neuralegion.com/scans/$SCAN_ID"
               sleep 10
               echo "Wait for issues ⏳"
             - |
-              sh '''#!/bin/bash
-                RESULT=$(nexploit-cli scan:polling --interval 30s --timeout 20m --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --breakpoint medium_issue $SCAN_ID)
-                if [ -z "$RESULT" ]; then
-                   echo "Failed to stop scan"
-                else 
-                    echo "Stop Scan 🛑" nexploit-cli scan:stop --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r $SCAN_ID
-                fi
-              '''
+              nexploit-cli scan:polling               \
+                --interval 30s                        \
+                --timeout 20m                         \
+                --token $int_Nexploit_NEXPLOIT_TOKEN  \
+                --breakpoint medium_issue $SCAN_ID
+          onComplete:
+            - nexploit-cli scan:stop --token $int_Nexploit_NEXPLOIT_TOKEN $SCAN_ID

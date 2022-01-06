@@ -39,7 +39,7 @@ pipelines:
               nexploit-cli scan:polling               \
                 --interval 30s                        \
                 --timeout 20m                         \
-                --token $int_Nexploit_NEXPLOIT_TOKEN  \
+                --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r  \
                 --breakpoint high_issue $SCAN_ID
           onComplete:
             - nexploit-cli scan:stop --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r $SCAN_ID

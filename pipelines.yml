@@ -18,31 +18,26 @@ pipelines:
         execution:
           onExecute:
             - sudo apt update
-            - sudo chmod 1777 /tmp
             - sudo apt update            
-            - sudo curl -L "https://github.com/docker/compose/releases/download/1.23.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             - sudo chmod +rwx /usr/local/bin/docker-compose
             - curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
             - sudo apt-get install -y nodejs
             - sudo npm install -g @neuralegion/nexploit-cli --unsafe-perm=true
             - |
-                printf "NEXPLOIT_TOKEN=$int_Nexploit_NEXPLOIT_TOKEN\nREPEATER=$int_Nexploit_REPEATER\n" > .env
-                cat .env
-            - |
-                docker-compose -f docker-compose.yml --env-file=.env up -d
-                docker-compose -f docker-compose.yml config     
-            - |
-              SCAN_ID=$(nexploit-cli scan:run       \
-                --name "💎 Broken Crystals for a #${res_jfrognexploit_commitSha} #${run_id}" \
-                --repeater $int_Nexploit_REPEATER                                            \
-                --crawler https://brokencrystals.com                                        \
-                --smart)
-            - printf "Scan was started with ID https://nexploit.app/scans/$SCAN_ID"
-            - |
-              nexploit-cli scan:polling               \
-                --interval 30s                        \                      \
-                --timeout 20m                         \
-                --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m  \
-                --breakpoint high_issue $SCAN_ID
-          onComplete:
-            - nexploit-cli scan:stop --token vs0gxzp.nexa.vqnc7olwz03nwemiobr4oiluhgfgcg0m $SCAN_ID
+              echo "Start Repeater 🏁"
+              PID_REPEATER=$(nexploit-cli repeater --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --id pQVpFx4swaytVDV9m5p3fS &> /dev/null & echo $!)
+              echo "Repeater started PID: $PID_REPEATER\n"
+              sleep 10
+              echo "Start NeuraLegion Scan 🏁"
+              SCAN_ID=$(nexploit-cli scan:run --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --repeater pQVpFx4swaytVDV9m5p3fS --name "Azure scan with repeater" --crawler https://brokencrystals.com/ --smart)
+              echo "Scan was started with ID https://app.neuralegion.com/scans/$SCAN_ID\n"
+              sleep 10
+              echo "Wait for issues ⏳\n"
+              RESULT=$(nexploit-cli scan:polling --interval 30s --timeout 20m --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --breakpoint medium_issue $SCAN_ID)
+              if [ -z "$RESULT" ]
+              then
+                  echo "Failed to stop scan"
+              else
+                  echo "Stop Scan 🛑"
+                  nexploit-cli scan:stop --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r $SCAN_ID
+              fi

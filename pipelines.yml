@@ -30,18 +30,18 @@ pipelines:
              echo ${REPEATER_ID}
              PID_REPEATER=$(nexploit-cli repeater --token=${NEURALEGION_TOKEN} --id=${REPEATER_ID} --bus amqps://amq.nexploit.app:5672 &> /dev/null & echo $!)
              echo $PID_REPEATER"
-            sleep 5
-            echo "Start NeuraLegion Scan 🏁"
-            SCAN_ID=$(nexploit-cli scan:run --token ${NEURALEGION_TOKEN} --repeater ${REPEATER_ID} --name "Jenkins Scan with Repeater" --crawler https://brokencrystals.com/ --smart)
-            echo "Scan was started with ID https://app.neuralegion.com/scans/$SCAN_ID\n"
-            sleep 10
-            echo "Wait for issues ⏳\n"
-            RESULT=$(nexploit-cli scan:polling --interval 30s --timeout 20m --token $NEURALEGION_TOKEN --breakpoint high_issue $SCAN_ID)
-            if [ -z "$RESULT" ]
-            then
-                echo "Failed to stop scan"
-            else
-                echo "Stop Scan 🛑"
-                nexploit-cli scan:stop --token $NEURALEGION_TOKEN $SCAN_ID
-            fi
-         '''
+             sleep 5
+             echo "Start NeuraLegion Scan 🏁"
+             SCAN_ID=$(nexploit-cli scan:run --token ${NEURALEGION_TOKEN} --repeater ${REPEATER_ID} --name "Jenkins Scan with Repeater" --crawler https://brokencrystals.com/ --smart)
+             echo "Scan was started with ID https://app.neuralegion.com/scans/$SCAN_ID\n"
+             sleep 10
+             echo "Wait for issues ⏳\n"
+             RESULT=$(nexploit-cli scan:polling --interval 30s --timeout 20m --token $NEURALEGION_TOKEN --breakpoint high_issue $SCAN_ID)
+             if [ -z "$RESULT" ]
+             then
+                 echo "Failed to stop scan"
+             else
+                 echo "Stop Scan 🛑"
+                 nexploit-cli scan:stop --token $NEURALEGION_TOKEN $SCAN_ID
+             fi
+          '''

@@ -26,8 +26,6 @@ pipelines:
             - |
             - sh '''#!/bin/bash
              echo "Start Repeater 🏁"
-             echo ${NEURALEGION_TOKEN}
-             echo ${REPEATER_ID}
              PID_REPEATER=$(nexploit-cli repeater --token=${NEURALEGION_TOKEN} --id=${REPEATER_ID} --bus amqps://amq.nexploit.app:5672 &> /dev/null & echo $!)
              echo $PID_REPEATER"
              sleep 5
@@ -44,4 +42,4 @@ pipelines:
                  echo "Stop Scan 🛑"
                  nexploit-cli scan:stop --token $NEURALEGION_TOKEN $SCAN_ID
              fi
-          '''
+                '''

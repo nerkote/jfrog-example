@@ -36,10 +36,11 @@ pipelines:
               sleep 10
               echo "Wait for issues ⏳"
             - |
-              #!/bin/bash
+              sh '''#!/bin/bash
               RESULT=$(nexploit-cli scan:polling --interval 30s --timeout 20m --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --breakpoint medium_issue $SCAN_ID)
               if [ -z "$RESULT" ]; then
                  echo "Failed to stop scan"
               else 
                   echo "Stop Scan 🛑" nexploit-cli scan:stop --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r $SCAN_ID
               fi
+              '''

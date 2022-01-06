@@ -24,14 +24,17 @@ pipelines:
             - sudo apt-get install -y nodejs
             - sudo npm install -g @neuralegion/nexploit-cli --unsafe-perm=true
             - |
+          sh '''#!/bin/bash
               echo "Start Repeater 🏁"
               PID_REPEATER=$(nexploit-cli repeater --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --id pQVpFx4swaytVDV9m5p3fS &> /dev/null & echo $!)
               echo "Repeater started PID: $PID_REPEATER\n"
               sleep 10
+            - |
               echo "Start NeuraLegion Scan 🏁"
               SCAN_ID=$(nexploit-cli scan:run --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --repeater pQVpFx4swaytVDV9m5p3fS --name "Azure scan with repeater" --crawler https://brokencrystals.com/ --smart)
               echo "Scan was started with ID https://app.neuralegion.com/scans/$SCAN_ID\n"
               sleep 10
+             - |
               echo "Wait for issues ⏳\n"
               RESULT=$(nexploit-cli scan:polling --interval 30s --timeout 20m --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --breakpoint medium_issue $SCAN_ID)
               if [ -z "$RESULT" ]
@@ -41,3 +44,4 @@ pipelines:
                   echo "Stop Scan 🛑"
                   nexploit-cli scan:stop --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r $SCAN_ID
               fi
+          '''

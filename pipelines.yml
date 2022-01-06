@@ -44,4 +44,4 @@ pipelines:
                  echo "Stop Scan 🛑"
                  nexploit-cli scan:stop --token $NEURALEGION_TOKEN $SCAN_ID
              fi
-             '''
+               '''

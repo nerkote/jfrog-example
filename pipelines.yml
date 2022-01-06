@@ -24,7 +24,6 @@ pipelines:
             - sudo apt-get install -y nodejs
             - sudo npm install -g @neuralegion/nexploit-cli --unsafe-perm=true
             - |
-         sh '''#!/bin/bash
              echo "Start Repeater 🏁"
              PID_REPEATER=$(nexploit-cli repeater --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --id pQVpFx4swaytVDV9m5p3fS --bus amqps://amq.nexploit.app:5672 &> /dev/null & echo $!)
              echo $PID_REPEATER"
@@ -42,4 +41,3 @@ pipelines:
                  echo "Stop Scan 🛑"
                  nexploit-cli scan:stop --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r $SCAN_ID
              fi
-         '''

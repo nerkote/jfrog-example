@@ -32,16 +32,17 @@ pipelines:
               echo "Repeater started PID: $PID_REPEATER\n"
               sleep 10
               echo "Start NeuraLegion Scan 🏁"
-              SCAN_ID=$(nexploit-cli scan:run --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --repeater pQVpFx4swaytVDV9m5p3fS --name "Azure scan with repeater" --crawler https://brokencrystals.com/ --smart)
+              SCAN_ID=$(nexploit-cli scan:run --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --repeater pQVpFx4swaytVDV9m5p3fS --name "JFrog scan with repeater" --crawler https://brokencrystals.com/ --smart)
               echo "Scan was started with ID https://app.neuralegion.com/scans/$SCAN_ID\n"
               sleep 10
-              echo "Wait for issues ⏳\n"
+            - | 
+              echo "Wait for issues ⏳"
               RESULT=$(nexploit-cli scan:polling --interval 30s --timeout 20m --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --breakpoint medium_issue $SCAN_ID)
-              if [ -z "$RESULT" ] 
-              then  
-                  echo "Failed to stop scan"  
-              else  
-                  echo "Stop Scan 🛑" 
+              if [ -z "$RESULT" ]    
+              then    \  
+                  echo "Failed to stop scan"      
+              else    \      
+                  echo "Stop Scan 🛑"   \ 
                   nexploit-cli scan:stop --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r $SCAN_ID 
                 fi
           onSuccess:

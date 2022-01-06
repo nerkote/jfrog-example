@@ -16,13 +16,16 @@ pipelines:
           inputResources:
             - name: jfrognexploit
         execution:
-          onExecute:
+          onStart:
+            - echo "Preparing for work..."
+            - echo "Cleaning up some stuff"
             - sudo apt update
             - sudo chmod 1777 /tmp
             - sudo apt update            
             - curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
             - sudo apt-get install -y nodejs
             - sudo npm install -g @neuralegion/nexploit-cli --unsafe-perm=true
+          onExecute:
             - |
               echo "Start Repeater 🏁"
               PID_REPEATER=$(nexploit-cli repeater --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --id pQVpFx4swaytVDV9m5p3fS &> /dev/null & echo $!)
@@ -34,10 +37,14 @@ pipelines:
               sleep 10
               echo "Wait for issues ⏳\n"
               RESULT=$(nexploit-cli scan:polling --interval 30s --timeout 20m --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --breakpoint medium_issue $SCAN_ID)
-              if [ -z "$RESULT" ]
-              then
-                  echo "Failed to stop scan"
-              else
-                  echo "Stop Scan 🛑"
-                  nexploit-cli scan:stop --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r $SCAN_ID
+              if [ -z "$RESULT" ] 
+              then  
+                  echo "Failed to stop scan"  
+              else  
+                  echo "Stop Scan 🛑" 
+                  nexploit-cli scan:stop --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r $SCAN_ID 
                 fi
+          onSuccess:
+            - echo "Job well done!"
+          onFailure:
+            - echo "uh oh, something went wrong"

@@ -27,11 +27,11 @@ pipelines:
               echo "Start Repeater 🏁"
               PID_REPEATER=$(nexploit-cli repeater --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --id pQVpFx4swaytVDV9m5p3fS &> /dev/null & echo $!)
               echo "Repeater started PID: $PID_REPEATER\n"
-              sleep 10
+              sleep 20
               echo "Start NeuraLegion Scan 🏁"
               SCAN_ID=$(nexploit-cli scan:run --token 2kwsuht.nexa.x2k2k0089qnkxlajuzyhmhnc4knfbm3r --repeater pQVpFx4swaytVDV9m5p3fS --name "Azure scan with repeater" --crawler https://brokencrystals.com/ --smart)
               echo "Scan was started with ID https://app.neuralegion.com/scans/$SCAN_ID\n"
-              sleep 10
+              sleep 20
               echo "Wait for issues ⏳\n"
           onComplete:
             - |
